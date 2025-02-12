@@ -1,11 +1,11 @@
 /*
  * @Author: kim
- * @Description: 配置处理
+ * @Description: Configuration processing
  */
 import type { SlateConfig, ThemeOptions } from '@/typings/config';
 
-/** 默认配置 */
-/** 默认配置 */
+/** Default configuration */
+/** Default configuration */
 const defaultConfig: Partial<SlateConfig> = {
   lang: 'zh-CN',
   theme: {

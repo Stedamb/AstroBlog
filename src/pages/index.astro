@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import Search from '@/components/search';
 import PageLayout from '@/components/layouts/PageLayout.astro';
-// import Button from '@/components/button';
 import slateConfig from '~@/slate.config';
 
 const postCollection = await getCollection('post', ({ data }) => {
@@ -46,21 +44,17 @@ const posts = [...postCollection]
 
 <PageLayout>
   <section class="relative mb-16">
-    <h3 class="text-[40px] font-semibold leading-tight text-slate12">
+    <h1 class="text-6xl font-semibold leading-tight text-slate12">
       {slateConfig.title}
-    </h3>
-    <p class="text-xl text-slate10">{slateConfig.description}</p>
-    <Search
-      client:only="react"
-      className="absolute right-0 top-1/2 -translate-y-1/2"
-    />
+    </h1>
+    <div class="text-2xl text-slate10">{slateConfig.description}</div>
   </section>
 
   <section class="mb-16">
-    <div class="text-base text-slate12">
+    <div class="text-xl text-slate12">
       {
         posts.map((item) => (
-          <a class="flex cursor-pointer flex-col justify-between rounded-lg py-2.5 transition-all active:scale-[0.995] active:bg-slate4 sm:flex-row sm:items-center sm:px-2 sm:hover:bg-slate3" href={item.url} title={item.data.title}>
+          <a class="flex cursor-pointer flex-col justify-between rounded-lg py-3 transition-all active:scale-[0.995] active:bg-slate4 sm:flex-row sm:items-center sm:px-2 sm:hover:bg-slate3" href={item.url} title={item.data.title}>
             <span class="shrink-0">{item.data.title}</span>
             <span class="mx-8 hidden h-px w-full grow border-t border-dashed border-slate6 sm:flex" />
             <span class="shrink-0 text-slate8">
@@ -77,7 +71,6 @@ const posts = [...postCollection]
     <!-- <Button className='m-auto mt-6' block> More </Button> -->
   </section>
 
-  <!-- S 标签 -->
   <section class="mb-16">
     <ul class="flex flex-wrap gap-2 text-base text-slate10">
       {
@@ -90,5 +83,4 @@ const posts = [...postCollection]
       }
     </ul>
   </section>
-  <!-- E 标签 -->
 </PageLayout>

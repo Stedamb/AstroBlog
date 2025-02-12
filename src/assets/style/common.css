@@ -18,6 +18,36 @@
 @import "@radix-ui/colors/indigo-dark.css";
 @import "@radix-ui/colors/orange-dark.css";
 
+/* Geist Font */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -139,5 +169,11 @@
 }
 
 body {
-  @apply text-sm text-slate12;
+  @apply text-base text-slate12 transition-colors duration-[500ms];
+
+  font-family: 'Geist', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }

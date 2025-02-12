@@ -1,7 +1,5 @@
 ---
 import stateConfig from '~@/slate.config';
-import type { ThemeOptions } from '@/typings/config';
-import ThemeSelect from '@/components/theme-select';
 
 interface Props {
   copyright?: string;
@@ -12,7 +10,4 @@ const { copyright = stateConfig.footer?.copyright } = Astro.props;
 
 <footer class="mt-auto flex items-center justify-between pt-6">
   <div class="text-slate8 text-sm">{copyright}</div>
-  {/* S 主题选择 */}
-  {(stateConfig.theme as ThemeOptions).enableUserChange && <ThemeSelect client:visible />}
-  {/* E 主题选择 */}
 </footer>

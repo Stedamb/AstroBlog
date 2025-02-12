@@ -1,21 +1,28 @@
 ---
+import type { ThemeOptions } from '@/typings/config';
 import slateConfig from '~@/slate.config';
+import ThemeSelect from '../theme-select';
+import Button from '../button';
 
-interface Props {
-  avatar?: string;
-}
-
-const { avatar = slateConfig.avatar } = Astro.props;
+const pathname = new URL(Astro.request.url).pathname;
+const isSubPage = pathname !== '/';
 ---
 
 <header>
-  <div class="mb-9 h-14 w-14 whitespace-nowrap text-[0px]">
-    <img
-      class="block h-full w-full rounded-full border-2 border-white bg-slate2 shadow-xs"
-      src={avatar}
-      alt={slateConfig.title}
-      draggable="false"
-    />
-    <span>{slateConfig.title}</span>
+  <div class={`flex relative ${!isSubPage ? "pb-18" : ""}`}>
+    {isSubPage && (
+      <div class="mb-16">
+        <Button className="size-18" id="back">←</Button>
+      </div>
+    )}
+    <div class="ml-auto">
+      {(slateConfig.theme as ThemeOptions).enableUserChange && <ThemeSelect client:visible />}
+    </div>
   </div>
 </header>
+
+<script>
+  document.getElementById('back')?.addEventListener('click', () => {
+    window.history.back();
+  });
+</script>

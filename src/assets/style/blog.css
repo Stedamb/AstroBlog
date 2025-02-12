@@ -4,21 +4,31 @@
   @apply mb-16;
 
   h1 {
-    @apply mb-2 text-4xl font-bold leading-normal text-slate12;
+    @apply mb-2 text-5xl font-bold leading-normal text-slate12;
   }
+
   h2 {
-    @apply mb-2 mt-8 text-3xl font-semibold leading-normal text-slate12;
+    @apply mb-2 mt-8 text-4xl font-semibold leading-normal text-slate12;
   }
+
   h3 {
     @apply my-2 text-2xl font-semibold leading-normal text-slate12;
   }
 
   h4 {
-    @apply my-2 text-base font-semibold leading-normal text-slate12;
+    @apply my-2 text-xl font-semibold leading-normal text-slate12;
+  }
+
+  h5 {
+    @apply my-2 text-lg font-semibold leading-normal text-slate12;
+  }
+
+  h6 {
+    @apply my-2 text-sm font-semibold leading-normal text-slate12;
   }
 
   p {
-    @apply my-6 mt-4 text-base leading-relaxed text-slate12;
+    @apply my-6 mt-4 text-xl leading-relaxed text-slate12;
   }
 
   a {
@@ -35,7 +45,7 @@
   }
 
   code {
-    @apply mx-0.5 rounded-lg border border-slate4 bg-slate3 p-0.5 px-1 text-base text-slate11;
+    @apply mx-0.5 rounded-lg border border-slate4 bg-slate3 p-0.5 px-1 !text-xl text-slate11;
   }
 
   .code{
@@ -50,7 +60,7 @@
     @apply my-6 rounded-xl p-4;
 
     p {
-      @apply my-0 text-base leading-relaxed text-slate12;
+      @apply my-0 text-xl leading-relaxed text-slate12;
     }
   }
 
@@ -87,7 +97,7 @@
     @apply my-6 border-l-2 border-slate4 pl-4;
 
     p {
-      @apply text-base leading-relaxed text-slate10;
+      @apply text-xl leading-relaxed text-slate10;
     }
   }
 
@@ -96,7 +106,7 @@
   }
 
   ul {
-    @apply mb-6 mt-2 list-disc pl-4 text-base leading-relaxed text-slate11;
+    @apply mb-6 mt-2 list-disc pl-4 text-xl leading-relaxed text-slate11;
   }
 
   ul li::marker {
@@ -104,11 +114,11 @@
   }
 
   ol {
-    @apply mb-6 mt-2 list-decimal pl-6 text-base leading-relaxed text-slate11;
+    @apply mb-6 mt-2 list-decimal pl-6 text-xl leading-relaxed text-slate11;
   }
 
   li {
-    @apply text-base leading-relaxed text-slate11;
+    @apply text-xl leading-relaxed text-slate11;
   }
 
   ol li::marker {
@@ -116,7 +126,7 @@
   }
 
   figcaption {
-    @apply text-center text-sm text-slate8 -mt-4;
+    @apply text-center text-lg text-slate8 -mt-4;
   }
 
   .expressive-code{

@@ -1,6 +1,6 @@
 /*
  * @Author: kim
- * @Description: 目录
+ * @Description: Table of Contents
  */
 import type { MarkdownHeading } from 'astro';
 import classNames from 'classnames';
@@ -26,7 +26,7 @@ function Toc(props: TocProps) {
                 return (
                   <li key={item.slug}>
                     <a
-                      className="inline-block cursor-pointer py-0.5 transition-colors hover:text-slate12"
+                      className="inline-block cursor-pointer py-1 transition-colors hover:text-slate12"
                       style={{ marginLeft: `${(item.depth - 2) * 8}px` }}
                       href={`#${item.slug}`}
                     >

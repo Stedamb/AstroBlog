@@ -1,6 +1,6 @@
 /*
  * @Author: kim
- * @Description: rss 提要
+ * @Description: RSS feed
  */
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';

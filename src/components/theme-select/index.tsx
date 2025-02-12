@@ -9,15 +9,15 @@ import { ThemeValue } from '@/typings/global';
 
 const THEME_LIST: Array<{ icon: ReactNode; value: ThemeValue }> = [
   {
-    icon: <DesktopOutlined className="h-4 w-4" />,
+    icon: <DesktopOutlined className="size-5" />,
     value: ThemeValue.Auto,
   },
   {
-    icon: <SunOutlined className="h-4 w-4" />,
+    icon: <SunOutlined className="size-5" />,
     value: ThemeValue.Light,
   },
   {
-    icon: <MoonOutlined className="h-4 w-4" />,
+    icon: <MoonOutlined className="size-5" />,
     value: ThemeValue.Dark,
   },
 ];
@@ -41,11 +41,11 @@ const ThemeSelect = () => {
 
   const themeSelectClasses = useMemo(() => {
     if (currentTheme === ThemeValue.Dark) {
-      return 'left-[58px]';
+      return 'right-1';
     } else if (currentTheme === ThemeValue.Light) {
-      return 'left-[30px]';
+      return 'left-1/2 -translate-x-1/2';
     } else {
-      return 'left-0.5';
+      return 'left-1';
     }
   }, [currentTheme]);
 
@@ -64,15 +64,15 @@ const ThemeSelect = () => {
 
   return (
     <div
-      className="bg-slate3 text-slate8 relative flex items-center rounded-full p-0.5"
+      className="bg-slate3 text-slate8 relative flex items-center rounded-full px-3 h-18 gap-4"
       role="radiogroup"
     >
       <div
-        className={`bg-slate1 transition-left absolute top-0.5 h-7 w-7 rounded-full ${themeSelectClasses}`}
+        className={`bg-slate1 transition-all duration-400 absolute top-1 size-16 rounded-full ${themeSelectClasses}`}
       ></div>
       {THEME_LIST.map((item) => (
         <div
-          className={`relative inline-flex h-7 w-7 cursor-pointer items-center justify-center transition-colors ${item.value === currentTheme ? 'text-slate12' : 'text-slate10 hover:text-slate11'}`}
+          className={`relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors ${item.value === currentTheme ? 'text-slate12' : 'text-slate10 hover:text-slate11'}`}
           key={item.value}
           onClick={() => handleThemeChange(item.value)}
           onKeyDown={(e) => {
