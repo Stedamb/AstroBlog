@@ -1,6 +1,6 @@
 # Slate blog
 
-English · [中文](./README-zh_CN.md)
+English
 
 ## Why We build it?
 

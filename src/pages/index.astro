@@ -44,17 +44,17 @@ const posts = [...postCollection]
 
 <PageLayout>
   <section class="relative mb-16">
-    <h1 class="text-6xl font-semibold leading-tight text-slate12">
+    <h1 class="text-6xl font-medium text-slate12">
       {slateConfig.title}
     </h1>
-    <div class="text-2xl text-slate10">{slateConfig.description}</div>
+    <div class="text-2xl text-slate10 mt-2">{slateConfig.description}</div>
   </section>
 
   <section class="mb-16">
     <div class="text-xl text-slate12">
       {
         posts.map((item) => (
-          <a class="flex cursor-pointer flex-col justify-between rounded-lg py-3 transition-all active:scale-[0.995] active:bg-slate4 sm:flex-row sm:items-center sm:px-2 sm:hover:bg-slate3" href={item.url} title={item.data.title}>
+          <a class="font-serif italic font-light flex cursor-pointer flex-col justify-between rounded-lg py-3 transition-all active:scale-[0.995] active:bg-slate4 sm:flex-row sm:items-center sm:px-2 sm:hover:bg-slate3" href={item.url} title={item.data.title}>
             <span class="shrink-0">{item.data.title}</span>
             <span class="mx-8 hidden h-px w-full grow border-t border-dashed border-slate6 sm:flex" />
             <span class="shrink-0 text-slate8">

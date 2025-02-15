@@ -1,6 +1,3 @@
-/*
- * @file 主题配置
- */
 import { defineConfig } from './src/helpers/config-helper';
 
 export default defineConfig({

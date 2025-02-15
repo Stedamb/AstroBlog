@@ -1,7 +1,7 @@
 {
   "prettier.documentSelectors": ["**/*.astro"],
   "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "eslint.validate": [
     "javascript",
@@ -9,5 +9,7 @@
     "astro",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "IDX.aI.enableInlineCompletion": true,
+  "IDX.aI.enableCodebaseIndexing": true
 }
