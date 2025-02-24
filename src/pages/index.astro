@@ -54,7 +54,7 @@ const posts = [...postCollection]
     <div class="text-2xl font-geist font-light">
       {
         posts.map((item) => (
-          <a class="link text-slate12 flex cursor-pointer flex-col justify-between transition-transform duration-200 ease-in-out rounded-lg py-3 active:scale-[0.95] sm:flex-row sm:items-center sm:px-6 hover:text-foreground" href={item.url} title={item.data.title}>
+          <a class="link text-slate12 flex cursor-pointer flex-col justify-between transition-transform duration-200 ease-in-out py-3 active:scale-[0.95] sm:flex-row sm:items-center sm:px-6 hover:text-foreground" href={item.url} title={item.data.title}>
             <span class="shrink-0 transition-colors">{item.data.title}</span>
             <span class="mx-8 hidden h-px w-full grow border-t border-dashed border-slate10 sm:flex" />
             <span class="shrink-0 text-slate11 italic font-mono text-lg">
