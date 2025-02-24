@@ -32,7 +32,7 @@
   }
 
   a {
-    @apply text-indigo11 underline-offset-4 transition-all hover:underline decoration-indigo6;
+    @apply text-foreground underline-offset-4 transition-all hover:underline decoration-foreground;
   }
 
   /* a::after{
@@ -45,7 +45,7 @@
   }
 
   code {
-    @apply mx-0.5 rounded-lg border border-slate4 bg-slate3 p-0.5 px-1 !text-xl text-slate11;
+    @apply mx-0.5 rounded-lg bg-foreground-light p-0.5 px-1 !text-xl text-slate11;
   }
 
   .code{
@@ -65,31 +65,28 @@
   }
 
   .tip {
-    @apply border border-indigo4 bg-indigo2;
+    @apply border border-foreground bg-background-alt;
 
     .block-title {
-      @apply text-lg font-semibold text-indigo11;
+      @apply text-lg font-semibold text-foreground;
     }
   }
 
-  .warning {
-    @apply border border-orange4 bg-orange2;
-
-    .block-title {
-      @apply text-lg font-semibold text-orange11;
-    }
-  }
 
   table {
-    @apply my-6 w-full border-collapse overflow-hidden rounded-xl ring-1 ring-slate4;
+    @apply my-6 text-lg text-slate12 w-full border-collapse overflow-hidden rounded-xl ring-1 ring-foreground;
 
     thead {
-      @apply border-b border-slate4 bg-slate3 text-left;
+      @apply bg-foreground-light text-left;
     }
 
     th,
     td {
-      @apply border-b border-slate4 px-4 py-3;
+      @apply px-4 py-3;
+    }
+
+    tr:nth-child(even) {
+      @apply bg-background-alt;
     }
   }
 
@@ -109,10 +106,6 @@
     @apply mb-6 mt-2 list-disc pl-4 text-xl leading-relaxed text-slate11;
   }
 
-  ul li::marker {
-    @apply text-slate8;
-  }
-
   ol {
     @apply mb-6 mt-2 list-decimal pl-6 text-xl leading-relaxed text-slate11;
   }
@@ -121,12 +114,8 @@
     @apply text-xl leading-relaxed text-slate11;
   }
 
-  ol li::marker {
-    @apply text-slate8;
-  }
-
   figcaption {
-    @apply text-center text-lg text-slate8 -mt-4;
+    @apply text-center text-lg -mt-4;
   }
 
   .expressive-code{

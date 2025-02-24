@@ -13,7 +13,7 @@ interface TocProps {
 
 function Toc(props: TocProps) {
   const { dataSource = [], className, listClassName } = props;
-  const listClasses = classNames('text-slate8', listClassName);
+  const listClasses = classNames('text-slate10', listClassName);
 
   return (
     !!dataSource.length && (

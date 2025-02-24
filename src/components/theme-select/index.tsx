@@ -39,15 +39,15 @@ const ThemeSelect = () => {
     setCurrentTheme(presetTheme as ThemeValue);
   }, []);
 
-  const themeSelectClasses = useMemo(() => {
-    if (currentTheme === ThemeValue.Dark) {
-      return 'right-1';
-    } else if (currentTheme === ThemeValue.Light) {
-      return 'left-1/2 -translate-x-1/2';
-    } else {
-      return 'left-1';
-    }
-  }, [currentTheme]);
+  // const themeSelectClasses = useMemo(() => {
+  //   if (currentTheme === ThemeValue.Dark) {
+  //     return 'right-1';
+  //   } else if (currentTheme === ThemeValue.Light) {
+  //     return 'left-1/2 -translate-x-1/2';
+  //   } else {
+  //     return 'left-1';
+  //   }
+  // }, [currentTheme]);
 
   const handleThemeChange = (value: ThemeValue) => {
     setCurrentTheme(value);
@@ -58,21 +58,34 @@ const ThemeSelect = () => {
         ? ThemeValue.Dark
         : ThemeValue.Light;
     }
+
+    // Get the computed background color before theme change
+    const beforeColor = getComputedStyle(document.body).getPropertyValue('--color-background');
+    
+    // Store the current background color in a CSS variable
+    document.documentElement.style.setProperty('--theme-transition-from', beforeColor);
+    
+    // Add transition class to body
+    document.body.classList.add('theme-transitioning');
+    
+    // Set the theme
     localStorage.setItem('theme', value);
     setThemeMode(mode);
+    
+    // Remove transition class after animation completes
+    setTimeout(() => {
+      document.body.classList.remove('theme-transitioning');
+    }, 1000);
   };
 
   return (
     <div
-      className="bg-slate3 text-slate8 relative flex items-center rounded-full px-3 h-18 gap-4"
+      className="bg-background-alt text-slate8 relative flex items-center rounded-full px-3 h-18 gap-4"
       role="radiogroup"
     >
-      <div
-        className={`bg-slate1 transition-all duration-400 absolute top-1 size-16 rounded-full ${themeSelectClasses}`}
-      ></div>
       {THEME_LIST.map((item) => (
         <div
-          className={`relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors ${item.value === currentTheme ? 'text-slate12' : 'text-slate10 hover:text-slate11'}`}
+          className={`relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors ${item.value === currentTheme ? 'text-slate12' : 'text-slate10 hover:text-foreground'}`}
           key={item.value}
           onClick={() => handleThemeChange(item.value)}
           onKeyDown={(e) => {

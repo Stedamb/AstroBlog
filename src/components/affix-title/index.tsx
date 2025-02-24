@@ -13,7 +13,7 @@ const AffixTitle = (props: AffixTitleProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const classes = classNames(
-    'fixed left-0 right-0 top-0 w-full transform bg-slate1/90 backdrop-blur-md transition-all duration-300 ease-in-out z-10',
+    'fixed left-0 right-0 top-0 w-full transform bg-background/80 backdrop-blur-md transition-all duration-300 ease-in-out z-10',
     isVisible ? ['translate-y-0', 'opacity-100'] : ['-translate-y-full', 'opacity-0'],
   );
 
@@ -39,11 +39,11 @@ const AffixTitle = (props: AffixTitleProps) => {
       <div className="mx-auto flex items-center justify-between px-8 max-w-5xl">
         <button
           onClick={() => window.location.href = '/'}
-          className="text-slate11 hover:text-slate12 transition-colors cursor-pointer w-4"
+          className="text-xl text-slate11 hover:text-slate12 transition-colors cursor-pointer w-8"
         >
           ←
         </button>
-        <div className="py-4 font-bold">{title}</div>
+        <div className="py-4 font-bold text-slate12">{title}</div>
         <div className="w-4" />
       </div>
     </div>
