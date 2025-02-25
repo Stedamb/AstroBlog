@@ -50,8 +50,8 @@ const formattedPubDate = pubDate.isSame(dayjs(), 'year')
 
   <div class="blog-content">
     <div class="mb-16">
-      <div class="text-7xl font-title text-text font-bold">{post.data.title}</div>
-      <div class="text-2xl font-mono flex items-center mt-2 gap-2 text-text-light">
+      <div class="text-5xl font-title text-text font-bold">{post.data.title}</div>
+      <div class="text-lg font-mono flex items-center mt-2 gap-2 text-text-light">
         <span>{formattedPubDate}</span>
         {!!slateConfig.readTime && <span>·</span>}
         {
