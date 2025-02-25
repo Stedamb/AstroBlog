@@ -4,7 +4,7 @@ export default defineConfig({
   site: 'https://slate-blog-demo.vercel.app',
   avatar: '/avatar.png',
   title: 'MEDITAZIONI',
-  description: 'Pure thoughts, simple stories.',
+  description: 'Un diario di riflessioni personali',
   lastModified: true,
   readTime: true,
   footer: {

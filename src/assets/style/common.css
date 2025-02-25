@@ -22,6 +22,8 @@
   --color-foreground: #b58900;
   --color-foreground-light: #f2e3a8;
   --color-foreground-alt: #ff3c00;
+  --color-text: #6f5b23;
+  --color-text-light: #b58a2d;
 }
 
 .dark,
@@ -33,6 +35,9 @@
   --color-foreground: #c51beb;
   --color-foreground-alt: #2f76fa;
   --color-foreground-light: #251b27;
+  --color-text: #eae4e9;
+  --color-text-light: #5e5b5e;
+
 }
 
 @theme {
@@ -40,6 +45,8 @@
   --color-background-alt: var(--color-background-alt);
   --color-foreground: var(--color-foreground);
   --color-foreground-light: var(--color-foreground-light);
+  --color-text: var(--color-text);
+  --color-text-light: var(--color-text-light);
 
   --color-slate1: var(--slate-1);
   --color-slate2: var(--slate-2);
@@ -70,7 +77,7 @@
 
 body {
   @apply font-sans text-base relative;
-  color: var(--slate12);
+  color: var(--text);
   transition:
     color 1000ms cubic-bezier(0.37, 0.2, 0.35, 1),
     background-color 400ms cubic-bezier(0.37, 0.2, 0.35, 1) 500ms;
@@ -115,6 +122,10 @@ body {
 }
 
 html {
+  font-size: 16px;
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+  }
   scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
@@ -170,6 +181,9 @@ html {
     }
   }
 }
+.sb-button {
+  @apply touch-manipulation select-none rounded-full px-4 py-2 text-base bg-background-alt transition-transform duration-200 ease-[cubic-bezier(.11,1.13,.79,1.19)] min-w-16 active:scale-95 cursor-pointer;
+} 
 
 @keyframes animateGlow {
   0% {

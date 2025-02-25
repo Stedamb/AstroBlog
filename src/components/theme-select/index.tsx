@@ -80,12 +80,12 @@ const ThemeSelect = () => {
 
   return (
     <div
-      className="bg-background-alt text-slate8 relative flex items-center rounded-full px-3 h-18 gap-4"
+      className="bg-background-alt relative flex items-center rounded-full px-3 h-18 gap-4"
       role="radiogroup"
     >
       {THEME_LIST.map((item) => (
         <div
-          className={`relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors ${item.value === currentTheme ? 'text-slate12' : 'text-slate10 hover:text-foreground'}`}
+          className={`relative inline-flex size-12 cursor-pointer items-center justify-center transition-all duration-300 ease-[cubic-bezier(.11,1.3,.79,1.19)] ${item.value === currentTheme ? 'text-text' : 'text-text-light hover:text-text hover:scale-[1.3]'}`}
           key={item.value}
           onClick={() => handleThemeChange(item.value)}
           onKeyDown={(e) => {

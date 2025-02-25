@@ -44,20 +44,20 @@ const posts = [...postCollection]
 
 <PageLayout>
   <section class="relative mb-16">
-    <h1 class="text-6xl font-title text-slate12">
+    <h1 class="text-6xl font-title text-text">
       {slateConfig.title}
     </h1>
-    <div class="text-2xl font-mono text-slate10 mt-2">{slateConfig.description}</div>
+    <div class="text-2xl font-mono text-text-light mt-2">{slateConfig.description}</div>
   </section>
 
   <section class="mb-16">
-    <div class="text-2xl font-geist font-light">
+    <div class="text-2xl font-geist">
       {
         posts.map((item) => (
-          <a class="link text-slate12 flex cursor-pointer flex-col justify-between transition-transform duration-200 ease-in-out py-3 active:scale-[0.95] sm:flex-row sm:items-center sm:px-6 hover:text-foreground" href={item.url} title={item.data.title}>
-            <span class="shrink-0 transition-colors">{item.data.title}</span>
-            <span class="mx-8 hidden h-px w-full grow border-t border-dashed border-slate10 sm:flex" />
-            <span class="shrink-0 text-slate11 italic font-mono text-lg">
+          <a class="link text-text border-b border-dashed border-text-light sm:border-0 flex cursor-pointer flex-col justify-between transition-transform duration-200 ease-in-out py-3 hover:scale-[0.98] active:scale-[0.95] sm:flex-row sm:items-center sm:px-6 hover:text-foreground" href={item.url} title={item.data.title}>
+            <span class="shrink-0 font-normal transition-colors">{item.data.title}</span>
+            <span class="mx-8 hidden h-px w-full grow border-t border-dashed border-text-light sm:flex" />
+            <span class="shrink-0 font-light text-text-light italic font-mono text-lg">
               {item.data.pubDate?.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
@@ -72,12 +72,12 @@ const posts = [...postCollection]
   </section>
 
   <section class="mb-16">
-    <ul class="flex flex-wrap gap-2 text-base text-slate10">
+    <ul class="flex flex-wrap gap-2 text-base text-text-light">
       {
         tags.map(({ name, count }) => (
-          <li class="block cursor-pointer rounded-full bg-background-alt px-4 py-2 text-slate10 transition-all hover:foreground-light hover:text-foreground">
+          <li class="block cursor-pointer rounded-full bg-background-alt px-4 py-2 text-text-light transition-all hover:foreground-light hover:text-foreground">
             {name}
-            <sup class="text-[10px] text-slate8">{count}</sup>
+            <sup class="text-[10px] text-text-light">{count}</sup>
           </li>
         ))
       }

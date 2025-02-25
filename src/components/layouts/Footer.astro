@@ -8,10 +8,14 @@ interface Props {
 const { copyright = stateConfig.footer?.copyright } = Astro.props;
 ---
 
-<footer class="mt-auto text-slate8 text-sm flex items-center justify-center gap-2 pt-6">
-  <div>Made with 🖤 by <a href="https://www.stedamb.it" class="font-serif italic hover:text-slate11 transition-colors">Stefano D'Ambrosio</a></div>
+<footer class="mt-auto text-text-light text-sm flex flex-col sm:flex-row items-center justify-center gap-2 pt-6">
+  <div>Made with 
+    <span class="text-foreground mx-1">❤</span>
+     by 
+     <a href="https://www.stedamb.it" class="font-serif italic hover:text-text transition-colors">Stefano D'Ambrosio</a>
+    </div>
   <span> · </span>
-  <div>Inspired by <a href="https://astro.build/themes/author/2011" class="font-serif italic hover:text-slate11 transition-colors">Slate Design</a></div>
+  <div>Inspired by <a href="https://astro.build/themes/author/2011" class="font-serif italic hover:text-text transition-colors">Slate Design</a></div>
   <span> · </span>
   <div>{copyright}</div>
 </footer>

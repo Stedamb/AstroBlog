@@ -13,7 +13,7 @@ interface TocProps {
 
 function Toc(props: TocProps) {
   const { dataSource = [], className, listClassName } = props;
-  const listClasses = classNames('text-slate10', listClassName);
+  const listClasses = classNames('text-text-light', listClassName);
 
   return (
     !!dataSource.length && (
@@ -26,7 +26,7 @@ function Toc(props: TocProps) {
                 return (
                   <li key={item.slug}>
                     <a
-                      className="inline-block cursor-pointer py-1 transition-colors hover:text-slate12"
+                      className="inline-block cursor-pointer py-1 transition-colors hover:text-text"
                       style={{ marginLeft: `${(item.depth - 2) * 8}px` }}
                       href={`#${item.slug}`}
                     >
