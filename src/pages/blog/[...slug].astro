@@ -10,7 +10,6 @@ import CodeGroupEvent from '@/components/code-group-event';
 import slateConfig from '~@/slate.config';
 import { getFullTitle } from '@/helpers/utils';
 import 'remark-block-containers/css';
-import '@/assets/style/blog.css';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post', ({ data }) => {

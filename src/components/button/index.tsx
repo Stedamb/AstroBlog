@@ -44,7 +44,7 @@ const Button = (props: ButtonProps) => {
   } = props;
 
   const classes = classNames(
-    'sb-button',
+    'button',
     {
       block: block,
       'inline-block': !block,

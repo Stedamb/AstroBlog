@@ -1,44 +1,9 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'MS-Mincho';
-  src: url('/fonts/Geist/MS-Mincho.woff2') format('woff2'),
-    url('/fonts/Geist/MS-Mincho.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@import "@radix-ui/colors/slate.css";
-@import "@radix-ui/colors/slate-dark.css";
-
-:root,
-.light,
-.light-theme,
-.radix-themes {
-  --color-background: #f3e5c7;
-  --color-background-alt: #eae0b9;
-  --color-background-alpha: #eae0b955;
-  --color-foreground: #b58900;
-  --color-foreground-light: #f2e3a8;
-  --color-foreground-alt: #ff3c00;
-  --color-text: #6f5b23;
-  --color-text-light: #b58a2d;
-}
-
-.dark,
-.dark-theme,
-:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
-  --color-background: #111;
-  --color-background-alt: #222;
-  --color-background-alpha: #22222255;
-  --color-foreground: #c51beb;
-  --color-foreground-alt: #2f76fa;
-  --color-foreground-light: #251b27;
-  --color-text: #eae4e9;
-  --color-text-light: #5e5b5e;
-
-}
+@import "./typography.css";
+@import "./colors.css";
+@import "./button.css";
+@import "./richtext.css";
 
 @theme {
   --color-background: var(--color-background);
@@ -48,31 +13,10 @@
   --color-text: var(--color-text);
   --color-text-light: var(--color-text-light);
 
-  --color-slate1: var(--slate-1);
-  --color-slate2: var(--slate-2);
-  --color-slate3: var(--slate-3);
-  --color-slate4: var(--slate-4);
-  --color-slate5: var(--slate-5);
-  --color-slate6: var(--slate-6);
-  --color-slate7: var(--slate-7);
-  --color-slate8: var(--slate-8);
-  --color-slate9: var(--slate-9);
-  --color-slate10: var(--slate-10);
-  --color-slate11: var(--slate-11);
-  --color-slate12: var(--slate-12);
-
-  --container-180: 45rem;
-  --container-220: 55rem;
-
-  --padding-18: 4.5rem;
-
-  --transition-property-left: left;
-
   --font-sans: 'Geist', sans-serif;
   --font-mono: 'Geist Mono', monospace;
   --font-serif: 'Roboto Serif', serif;
   --font-title: 'MS-Mincho', serif;
-
 }
 
 body {
@@ -155,46 +99,4 @@ html {
   }
 }
 
-.link {
-  position: relative;
 
-  &:after {
-    opacity: 0;
-    transition: 1s opacity ease .2s;
-    position: absolute;
-    filter: blur(100px);
-    content: "";
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to left, var(--color-foreground), var(--color-foreground-alt));
-    background-size: 200% 200%;
-    animation: animateGlow 15s linear infinite;
-  }
-
-  &:hover {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-.sb-button {
-  @apply touch-manipulation select-none rounded-full px-4 py-2 text-base bg-background-alt transition-transform duration-200 ease-[cubic-bezier(.11,1.13,.79,1.19)] min-w-16 active:scale-95 cursor-pointer;
-} 
-
-@keyframes animateGlow {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
