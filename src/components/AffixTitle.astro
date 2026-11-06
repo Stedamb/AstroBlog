@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  /** Scroll distance (px) after which the bar slides in. */
+  offsetTop?: number;
+}
+
+const { title, offsetTop = 320 } = Astro.props;
+---
+
+<affix-title
+  data-offset={offsetTop}
+  inert
+  class="bg-background/80 fixed inset-x-0 top-0 z-10 block -translate-y-full opacity-0 backdrop-blur-md transition-all duration-300 ease-in-out data-visible:translate-y-0 data-visible:opacity-100"
+>
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-8">
+    <a href="/" aria-label="Back to home" class="text-text-light hover:text-text w-8 text-xl transition-colors">
+      ←
+    </a>
+    <div class="text-text py-4 font-bold">{title}</div>
+    <div class="w-8"></div>
+  </div>
+</affix-title>
+
+<script>
+  class AffixTitle extends HTMLElement {
+    #frame = 0;
+
+    connectedCallback() {
+      this.#update();
+      window.addEventListener('scroll', this.#onScroll, { passive: true });
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('scroll', this.#onScroll);
+      cancelAnimationFrame(this.#frame);
+    }
+
+    #onScroll = () => {
+      cancelAnimationFrame(this.#frame);
+      this.#frame = requestAnimationFrame(this.#update);
+    };
+
+    #update = () => {
+      const visible = window.scrollY >= Number(this.dataset['offset'] ?? 0);
+      this.toggleAttribute('data-visible', visible);
+      // Keep the hidden bar out of the tab order and accessibility tree.
+      this.inert = !visible;
+    };
+  }
+
+  customElements.define('affix-title', AffixTitle);
+</script>

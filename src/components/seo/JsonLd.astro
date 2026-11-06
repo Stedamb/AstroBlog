@@ -1,0 +1,36 @@
+---
+import config from '@config';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  article?: { published?: Date | undefined; modified?: Date | undefined } | undefined;
+}
+
+const { title, description, image, article } = Astro.props;
+const imageUrl = new URL(image, Astro.site).href;
+
+const jsonLd = JSON.stringify(
+  article
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        image: imageUrl,
+        datePublished: article.published?.toISOString(),
+        dateModified: article.modified?.toISOString(),
+        author: { '@type': 'Person', name: config.author },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: title,
+        description,
+        image: imageUrl,
+      },
+);
+---
+
+<script type="application/ld+json" set:html={jsonLd} />

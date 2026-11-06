@@ -1,163 +1,108 @@
-# Slate blog
+# Meditazioni
 
-English
+A minimalist, content-first blog built with Astro. Based on the [Slate](https://astro.build/themes/author/2011) theme and designed to publish notes straight from [Obsidian](https://obsidian.md/).
 
-## Why We build it?
+- Light, dark and system themes with a WebGL "liquid ripple" transition
+- Drafts visible in local dev only, filtered out of production builds
+- Reading time and last-edited date (from git history) on posts
+- Markdown extras: containers, KaTeX math, emoji shortcodes, figure captions, code imports
+- SEO: canonical URLs, Open Graph/Twitter cards, JSON-LD, sitemap, robots.txt
+- Zero client-side framework: interactive bits are small custom elements
 
-We love writing and sharing, and we appreciate well-crafted products. That’s why we created this minimalist theme, focusing on content itself, providing a smooth and pure writing and reading experience. Built on the latest framework, it’s faster, lighter, and more efficient.
+## Stack
 
-It also works seamlessly with [Obsidian](https://obsidian.md/), helping you turn your notes into published posts effortlessly.
+Astro 7 · TypeScript (strictest) · Tailwind CSS v4 · Expressive Code · Vitest · ESLint · Prettier
 
-## ✨ Features
+## Getting started
 
-- Minimalist style theme, adaptable to multiple platforms
-- Support `light` and `dark` mode.
-- Zero-based quick start, foolproof configuration, easy deployment
-- Support for article drafts, local preview, and automatic draft filtering in production builds
-- Default RSS generation with Follow subscription authentication
-- Integrated Algolia search
-- Complete SEO optimization to improve search engine rankings
-
-## 🪜 Framework
-
-- Astro + React + Typescript  
-- Tailwindcss + @radix-ui/colors
-  - Updated to [Tailwind CSS v4.0](https://tailwindcss.com/blog/tailwindcss-v4) (Jan 10, 2025)
-- Docsearch
-
-## 🔨 Usage
+Requires Node `>=22.12` (see `.nvmrc`) and pnpm (pinned via `packageManager`; run `corepack enable` once).
 
 ```bash
-# Start local server
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-
-# Build
-npm run build
-# or
-yarn build
-# or
-pnpm build
+pnpm install
+pnpm dev        # http://localhost:4321
 ```
 
-## 🗂 Directory Structure
+## Scripts
+
+| Script                         | What it does                                         |
+| ------------------------------ | ---------------------------------------------------- |
+| `pnpm dev`                     | Dev server with drafts visible                       |
+| `pnpm build`                   | Static production build into `dist/`                 |
+| `pnpm preview`                 | Serve the production build                           |
+| `pnpm check`                   | Type-check `.astro` and `.ts` files                  |
+| `pnpm lint` / `lint:fix`       | ESLint (TypeScript, Astro, a11y rules)               |
+| `pnpm format` / `format:check` | Prettier (with Astro and Tailwind class sorting)     |
+| `pnpm test` / `test:watch`     | Unit tests with Vitest                               |
+| `pnpm validate`                | Everything CI runs: check, lint, format, test, build |
+
+### Quality gates
+
+- **pre-commit** (husky + lint-staged): ESLint and Prettier on staged files.
+- **commit-msg**: commitlint with the Angular convention (`feat: …`, `fix: …`).
+- **CI** (`.github/workflows/ci.yml`): `pnpm validate` on every push to `main` and every PR.
+
+## Project structure
 
 ```
-- plugins/            # Custom plugins
-- src/
-  ├── assets/         # Asset files
-  ├── components/     # Components
-  ├── content/        # Content collections
-  ├── helpers/        # Business logic
-  ├── pages/          # Pages
-  └── typings/        # Common types
+slate.config.ts          Site config (title, theme, features) — import it as `@config`
+astro.config.ts          Astro integrations and the Markdown pipeline
+src/
+├── content.config.ts    Post collection schema
+├── content/post/        Posts (.md / .mdx); the filename is the URL slug
+├── pages/               Routes: home, /blog/[slug], 404, robots.txt
+├── layouts/             PageLayout (head, header, footer)
+├── components/
+│   ├── seo/             HeadMeta, JsonLd
+│   └── theme/           ThemeInit (no-flash script), ThemeSelect, ripple shader
+├── lib/                 Framework-free logic, unit tested (*.test.ts)
+│   └── remark/          Reading-time and last-modified remark plugins
+├── styles/              Tailwind entry (global.css) and design tokens (colors.css)
+└── assets/icons/        SVGs imported as Astro components
 ```
 
-> Articles are stored in the `src/content/post` directory, supporting markdown and mdx formats. The filename is the path name. For example, `src/content/post/my-first-post.md` => `https://your-blog.com/blog/my-first-post`.
+Import from `src/` with the `@/` alias, e.g. `import { getPosts } from '@/lib/posts'`.
 
 ## Configuration
 
-Theme configuration is done through `slate.config.ts` in the root directory.
+`slate.config.ts`:
 
-| Option | Description | Type | Default |
-| --- | --- | --- | --- |
-| site | Final deployment link | `string` | - |
-| title | Website title | `string` | - |
-| description | Website description | `string` | - |
-| lang | Language | `string` | `zh-CN` |
-| theme | Theme | `{ mode: 'auto' | 'light' | 'dark', enableUserChange: boolean }` | `{ mode: 'auto', enableUserChange: true }` |
-| avatar | Avatar | `string` | - |
-| sitemap | Website sitemap configuration | [SitemapOptions](https://docs.astro.build/en/guides/integrations-guide/sitemap/)  | - |
-| readTime | Show reading time | `boolean` | `false` |
-| lastModified | Show last modified time | `boolean` | `false` |
-| algolia | Docsearch configuration | `{ appId: string, apiKey: string, indexName: string }` | - |
-| follow | Follow subscription authentication configuration | `{ feedId: string, userId: string }` | - |
-| footer | Website footer configuration | `{ copyright: string }` | - |
+| Option         | Type                                                                             | Default                                    |
+| -------------- | -------------------------------------------------------------------------------- | ------------------------------------------ |
+| `site`         | `string` — deployment URL                                                        | required                                   |
+| `title`        | `string`                                                                         | required                                   |
+| `description`  | `string`                                                                         | required                                   |
+| `lang`         | `string` — BCP 47 tag for `<html lang>` and dates                                | `'en-US'`                                  |
+| `author`       | `string` — used in structured data                                               | `title`                                    |
+| `theme`        | `'auto' \| 'light' \| 'dark'` or `{ mode, enableUserChange }`                    | `{ mode: 'auto', enableUserChange: true }` |
+| `sitemap`      | [SitemapOptions](https://docs.astro.build/en/guides/integrations-guide/sitemap/) | —                                          |
+| `readTime`     | `boolean`                                                                        | `false`                                    |
+| `lastModified` | `boolean` — last commit date of the post file                                    | `false`                                    |
+| `footer`       | `{ copyright: string }`                                                          | —                                          |
 
-### Algolia Application
+## Writing posts
 
-1. Deploy your site first
-2. Apply for an `apiKey` at [algolia](https://docsearch.algolia.com/apply/)
-3. After successful application, configure `algolia` in `slate.config.ts`
-4. Redeploy
+Create `src/content/post/my-post.md` → `/blog/my-post`. An Obsidian template lives in `Obsidian Template/`.
 
-### Follow Subscription Authentication
+| Frontmatter   | Type       | Notes                          |
+| ------------- | ---------- | ------------------------------ |
+| `title`       | `string`   | required                       |
+| `description` | `string`   |                                |
+| `tags`        | `string[]` |                                |
+| `draft`       | `boolean`  | drafts only show in `pnpm dev` |
+| `pubDate`     | `date`     | required unless `draft: true`  |
 
-1. Register a [follow](https://follow.is/) account
-2. Deploy your site
-3. Click the `+` button on `follow`, select `RSS` subscription, and enter the `rss` link (usually `[site]/rss.xml`, where `site` is the value of `site` in `slate.config.ts`)
-4. Redeploy
-
-## Article Frontmatter Description
-
-| Option | Description | Type | Required |
-| --- | --- | --- | --- |
-| title | Article title | `string` | Yes |
-| description | Article description | `string` | No |
-| tags | Article tags | `string[]` | No |
-| draft | Whether it's a draft. When not provided or `false`, `pubDate` must be provided; drafts are only visible in local preview | `boolean` | No |
-| pubDate | Article publication date | `date` | No, required when `draft` is `false` |
-
-**For more details, check the `src/content/config.ts` file**
-
-### Example
+Beyond standard Markdown and GFM:
 
 ```md
----
-title: 40 questions
-description: This repo maintains revisons and translations to the list of 40 questions I ask myself each year and each decade.
-tags:
-  - Life
-  - Thinking
-  - Writing
-pubDate: 2025-01-06
----
+:::info
+Containers via `:::` markers
+:::
+
+Inline math $E = mc^2$ and blocks $$ E = mc^2 $$
+
+![This alt text becomes a figure caption](image-url)
 ```
 
-## Markdown Syntax Support
+## License
 
-In addition to standard Markdown syntax, the following extended syntax is supported:
-
-### Basic Syntax
-- Headers, lists, blockquotes, code blocks and other basic syntax
-- Tables
-- Links and images
-- **Bold**, *italic*, and ~strikethrough~ text
-
-### Extended Syntax
-#### Container syntax
-Using `:::` markers
-  ```md
-  :::info
-  This is an information prompt
-  :::
-  ```
-  The result will be displayed as:
-
-  :::info
-  This is an information prompt
-  :::
-
-#### LaTeX Mathematical Formulas
-  - Inline formula: $E = mc^2$
-  - Block formula: $$ E = mc^2 $$
-
-#### Support for image captions
-  ```md
-  ![Image caption](image-url)
-  ```
-The result will be displayed as:
-
-![Slate Blog Preview](https://pub-acdbc21bc3964d18a684b0c51010a4e5.r2.dev/slate-blog-preview.png)
-  
-## Updates
-### Version 1.1.1
-- Fixed known issues
-
-### Version 1.1
-- Upgraded to support [Tailwind CSS v4.0](https://tailwindcss.com/blog/tailwindcss-v4)
-- Added dark mode support
-- Fixed known issues
+MIT — see `LICENSE.txt`.

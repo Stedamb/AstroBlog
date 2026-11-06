@@ -1,0 +1,25 @@
+---
+import config from '@config';
+---
+
+<footer class="text-text-light mt-auto flex flex-col items-center justify-center gap-2 pt-6 text-sm sm:flex-row">
+  <div>
+    Made with <span class="text-foreground mx-1">❤</span> by
+    <a href="https://www.stedamb.it" class="hover:text-text font-serif italic transition-colors">
+      Stefano D'Ambrosio
+    </a>
+  </div>
+  <span aria-hidden="true">·</span>
+  <div>
+    Inspired by
+    <a href="https://astro.build/themes/author/2011" class="hover:text-text font-serif italic transition-colors">
+      Slate Design
+    </a>
+  </div>
+  {config.footer && (
+    <>
+      <span aria-hidden="true">·</span>
+      <div>{config.footer.copyright}</div>
+    </>
+  )}
+</footer>

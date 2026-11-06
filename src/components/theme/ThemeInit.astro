@@ -1,0 +1,24 @@
+---
+import config from '@config';
+import { THEME_STORAGE_KEY } from '@/lib/theme';
+
+// Runs before first paint to avoid a flash of the wrong theme.
+// Mirrors `getStoredTheme` / `resolveTheme` / `applyTheme` in `@/lib/theme`.
+const defaultMode = config.theme.mode;
+const storageKey = THEME_STORAGE_KEY;
+---
+
+<script is:inline define:vars={{ defaultMode, storageKey }}>
+  let mode = defaultMode;
+  try {
+    const stored = localStorage.getItem(storageKey);
+    if (stored === 'auto' || stored === 'light' || stored === 'dark') mode = stored;
+  } catch {
+    // Storage unavailable: keep the configured default.
+  }
+  const theme = mode === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
+  const root = document.documentElement;
+  root.classList.add(theme);
+  root.dataset.theme = theme;
+  root.style.colorScheme = theme;
+</script>

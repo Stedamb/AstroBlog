@@ -1,15 +1,13 @@
 {
-  "prettier.documentSelectors": ["**/*.astro"],
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "astro",
-    "typescript",
-    "typescriptreact"
-  ],
-  "IDX.aI.enableInlineCompletion": true,
-  "IDX.aI.enableCodebaseIndexing": true
+  "prettier.documentSelectors": ["**/*.astro"],
+  "eslint.validate": ["javascript", "typescript", "astro"],
+  "tailwindCSS.experimental.configFile": "src/styles/global.css",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

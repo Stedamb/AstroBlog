@@ -1,77 +1,67 @@
 ---
-import dayjs from 'dayjs';
-import { type CollectionEntry, getCollection } from 'astro:content';
-import PageLayout from '@/components/layouts/PageLayout.astro';
-import ArticleJsonLd from '@/components/json-ld/article.astro';
-import Button from '@/components/button';
-import AffixTitle from '@/components/affix-title';
-import Toc from '@/components/toc';
-import CodeGroupEvent from '@/components/code-group-event';
-import slateConfig from '~@/slate.config';
-import { getFullTitle } from '@/helpers/utils';
+import config from '@config';
+import { render } from 'astro:content';
+import AffixTitle from '@/components/AffixTitle.astro';
+import Toc from '@/components/Toc.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+import { formatDate } from '@/lib/date';
+import { getPosts, type Post } from '@/lib/posts';
 import 'remark-block-containers/css';
 
 export async function getStaticPaths() {
-  const postEntries = await getCollection('post', ({ data }) => {
-    return import.meta.env.DEV || data.draft !== true;
-  });
-
-  return postEntries.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
-type Props = CollectionEntry<'post'>;
+interface Props {
+  post: Post;
+}
 
-const post = Astro.props;
-const { Content, remarkPluginFrontmatter, headings } = await post.render();
-const lastModifiedDate = dayjs(remarkPluginFrontmatter.lastModified ? remarkPluginFrontmatter.lastModified : undefined);
-const lastModified = lastModifiedDate.isSame(dayjs(), 'year')
-  ? lastModifiedDate.format('MMM DD')
-  : lastModifiedDate.format('MMM DD, YYYY');
-const pubDate = dayjs(post.data.pubDate);
-const formattedPubDate = pubDate.isSame(dayjs(), 'year')
-  ? pubDate.format('MMM DD')
-  : pubDate.format('MMM DD, YYYY');
+const { post } = Astro.props;
+const { title, description, pubDate } = post.data;
+const { Content, remarkPluginFrontmatter, headings } = await render(post);
+
+const minutesRead: string | undefined = config.readTime ? remarkPluginFrontmatter['minutesRead'] : undefined;
+const lastModified: Date | undefined =
+  config.lastModified && remarkPluginFrontmatter['lastModified']
+    ? new Date(remarkPluginFrontmatter['lastModified'])
+    : undefined;
 ---
 
-<PageLayout title={post.data.title} description={post.data.description}>
-  <ArticleJsonLd
-    slot="json-ld"
-    title={getFullTitle(post.data.title)}
-    description={post.data.description}
-    pubDate={post.data.pubDate}
-    lastModified={lastModifiedDate.toDate()}
-  />
-  <CodeGroupEvent client:only="react" />
-  <AffixTitle title={post.data.title} offsetTop={100} client:idle />
+<PageLayout title={title} description={description} article={{ published: pubDate, modified: lastModified }}>
+  <AffixTitle title={title} offsetTop={100} />
 
-  <div class="blog-content">
-    <div class="mb-16">
-      <div class="text-5xl font-title text-text font-bold">{post.data.title}</div>
-      <div class="text-lg font-mono flex items-center mt-2 gap-2 text-text-light">
-        <span>{formattedPubDate}</span>
-        {!!slateConfig.readTime && <span>·</span>}
-        {
-          slateConfig.readTime && (
-            <div>{remarkPluginFrontmatter.minutesRead}</div>
-          )
-        }
+  <article class="blog-content">
+    <header class="mb-16">
+      <h1 class="font-title text-text text-5xl font-bold">{title}</h1>
+      <div class="text-text-light mt-2 flex items-center gap-2 font-mono text-lg">
+        {pubDate ? (
+          <time datetime={pubDate.toISOString()}>{formatDate(pubDate, config.lang, { omitCurrentYear: true })}</time>
+        ) : (
+          <span>Draft</span>
+        )}
+        {minutesRead && <span aria-hidden="true">·</span>}
+        {minutesRead && <span>{minutesRead}</span>}
       </div>
-    </div>
-    <Content />
-    {
-      slateConfig.lastModified && (
-        <div class="text-text-light">Last edited {lastModified}</div>
-      )
-    }
-  </div>
+    </header>
 
-  <Toc
-    className="fixed bottom-0 right-2 top-0 hidden w-64 xl:block"
-    listClassName="px-5 pt-44 pb-14 "
-    dataSource={headings}
-    client:visible
-  />
+    <Content />
+
+    {lastModified && (
+      <div class="text-text-light">
+        Last edited{' '}
+        <time datetime={lastModified.toISOString()}>
+          {formatDate(lastModified, config.lang, { omitCurrentYear: true })}
+        </time>
+      </div>
+    )}
+  </article>
+
+  <Toc headings={headings} class="fixed top-0 right-2 bottom-0 hidden w-64 xl:block" />
 </PageLayout>
+
+<script>
+  import { useCodeGroups as initCodeGroups } from 'remark-block-containers/useCodeGroups';
+
+  initCodeGroups();
+</script>

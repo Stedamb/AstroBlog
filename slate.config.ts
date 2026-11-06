@@ -1,13 +1,13 @@
-import { defineConfig } from './src/helpers/config-helper';
+import { defineConfig } from './src/lib/config';
 
 export default defineConfig({
   site: 'https://slate-blog-demo.vercel.app',
-  avatar: '/avatar.png',
   title: 'MEDITAZIONI',
   description: 'Un diario di riflessioni personali',
+  author: "Stefano D'Ambrosio",
   lastModified: true,
   readTime: true,
   footer: {
     copyright: 'Copyright © 2025',
-  }
+  },
 });

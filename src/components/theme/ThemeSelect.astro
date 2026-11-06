@@ -1,0 +1,117 @@
+---
+import config from '@config';
+import DesktopIcon from '@/assets/icons/desktop.svg';
+import MoonIcon from '@/assets/icons/moon.svg';
+import SunIcon from '@/assets/icons/sun.svg';
+
+const options = [
+  { mode: 'auto', label: 'System theme', Icon: DesktopIcon },
+  { mode: 'light', label: 'Light theme', Icon: SunIcon },
+  { mode: 'dark', label: 'Dark theme', Icon: MoonIcon },
+] as const;
+---
+
+<theme-select
+  class="bg-background-alt flex h-18 items-center gap-4 rounded-full px-3"
+  role="radiogroup"
+  aria-label="Color theme"
+  data-default={config.theme.mode}
+>
+  {options.map(({ mode, label, Icon }) => (
+    <button
+      type="button"
+      role="radio"
+      aria-checked="false"
+      aria-label={label}
+      tabindex="-1"
+      data-mode={mode}
+      class="text-text-light aria-checked:text-text not-aria-checked:hover:text-text inline-flex size-12 cursor-pointer items-center justify-center transition-all duration-300 ease-[cubic-bezier(.11,1.93,.79,1.19)] not-aria-checked:hover:scale-130"
+    >
+      <Icon class="size-5" aria-hidden="true" />
+    </button>
+  ))}
+</theme-select>
+
+<script>
+  import {
+    applyTheme,
+    getAppliedTheme,
+    getStoredTheme,
+    isThemeMode,
+    resolveTheme,
+    storeTheme,
+    type ThemeMode,
+  } from '@/lib/theme';
+  import { rippleThemeChange } from './ripple';
+
+  const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  class ThemeSelect extends HTMLElement {
+    #mode: ThemeMode = 'auto';
+
+    get #radios() {
+      return [...this.querySelectorAll<HTMLButtonElement>('[data-mode]')];
+    }
+
+    connectedCallback() {
+      const fallback = this.dataset['default'];
+      this.#mode = getStoredTheme() ?? (isThemeMode(fallback) ? fallback : 'auto');
+      this.#render();
+      this.addEventListener('click', this.#onClick);
+      this.addEventListener('keydown', this.#onKeyDown);
+      darkQuery.addEventListener('change', this.#onSystemChange);
+    }
+
+    disconnectedCallback() {
+      darkQuery.removeEventListener('change', this.#onSystemChange);
+    }
+
+    #render() {
+      for (const radio of this.#radios) {
+        const checked = radio.dataset['mode'] === this.#mode;
+        radio.setAttribute('aria-checked', String(checked));
+        radio.tabIndex = checked ? 0 : -1;
+      }
+    }
+
+    #select(radio: HTMLButtonElement) {
+      const mode = radio.dataset['mode'];
+      if (!isThemeMode(mode)) return;
+
+      this.#mode = mode;
+      storeTheme(mode);
+      this.#render();
+
+      const theme = resolveTheme(mode, darkQuery.matches);
+      if (theme === getAppliedTheme()) return;
+
+      const rect = radio.getBoundingClientRect();
+      rippleThemeChange({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }, () => applyTheme(theme));
+    }
+
+    #onClick = (event: MouseEvent) => {
+      const radio = (event.target as Element).closest<HTMLButtonElement>('[data-mode]');
+      if (radio) this.#select(radio);
+    };
+
+    // Arrow keys move and select, per the WAI-ARIA radio group pattern.
+    #onKeyDown = (event: KeyboardEvent) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+
+      const radios = this.#radios;
+      const current = radios.findIndex((radio) => radio === document.activeElement);
+      const next = radios.at((current + step) % radios.length);
+      if (!next) return;
+      next.focus();
+      this.#select(next);
+    };
+
+    #onSystemChange = () => {
+      if (this.#mode === 'auto') applyTheme(resolveTheme('auto', darkQuery.matches));
+    };
+  }
+
+  customElements.define('theme-select', ThemeSelect);
+</script>

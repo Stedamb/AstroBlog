@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+@import './typography.css';
+@import './colors.css';
+@import './button.css';
+@import './richtext.css';
+
+@theme {
+  --font-sans: 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+  --font-serif: 'Roboto Serif', serif;
+  --font-title: 'MS-Mincho', serif;
+}
+
+body {
+  @apply relative font-sans text-base;
+  color: var(--color-text);
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+/* Theme ripple (see components/theme/ripple.ts) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(theme-ripple),
+::view-transition-old(theme-ripple),
+::view-transition-new(theme-ripple) {
+  animation: none;
+}
+
+html {
+  font-size: 16px;
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+  }
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-foreground);
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #666;
+    }
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

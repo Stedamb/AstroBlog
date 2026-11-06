@@ -1,0 +1,3 @@
+.button {
+  @apply min-w-16 cursor-pointer touch-manipulation rounded-full bg-background-alt px-4 py-2 text-base transition-transform duration-200 ease-[cubic-bezier(.11,1.13,.79,1.19)] select-none active:scale-95;
+}

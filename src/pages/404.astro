@@ -1,19 +1,13 @@
 ---
-import PageLayout from '@/components/layouts/PageLayout.astro';
-import Button from '@/components/button';
+import PageLayout from '@/layouts/PageLayout.astro';
 ---
 
 <PageLayout title="404">
   <div class="flex h-[70vh] flex-col items-center justify-center">
     <h1 class="mb-4 text-4xl font-bold">404</h1>
-    <p class="mb-8 text-text-light text-base">Page Not Found</p>
-    <Button id="back">Back to Home</Button>
+    <p class="text-text-light mb-8 text-base">Page Not Found</p>
+    <a href="/" class="button inline-block">
+      Back to Home
+    </a>
   </div>
 </PageLayout>
-
-<script>
-  const backBtn = document.getElementById('back');
-  backBtn?.addEventListener('click', () => {
-    window.location.href = '/';
-  });
-</script>

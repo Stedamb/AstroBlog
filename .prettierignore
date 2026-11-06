@@ -1,0 +1,7 @@
+dist/
+.astro/
+pnpm-lock.yaml
+public/
+# Posts are authored in Obsidian; don't reflow them.
+src/content/post/
+Obsidian Template/

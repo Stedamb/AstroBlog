@@ -1,0 +1,38 @@
+---
+import config from '@config';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import HeadMeta from '@/components/seo/HeadMeta.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import ThemeInit from '@/components/theme/ThemeInit.astro';
+import '@/styles/global.css';
+
+interface Props {
+  /** Page title; the site title is appended. */
+  title?: string | undefined;
+  description?: string | undefined;
+  /** Social preview image, relative to the site root. */
+  image?: string | undefined;
+  /** Marks the page as a blog post for Open Graph and structured data. */
+  article?: { published?: Date | undefined; modified?: Date | undefined } | undefined;
+}
+
+const { title, description = config.description, image = '/og_image.png', article } = Astro.props;
+const fullTitle = title ? `${title} | ${config.title}` : config.title;
+---
+
+<!doctype html>
+<html lang={config.lang}>
+  <head>
+    <HeadMeta title={fullTitle} description={description} image={image} type={article ? 'article' : 'website'} />
+    <JsonLd title={fullTitle} description={description} image={image} article={article} />
+    <ThemeInit />
+  </head>
+  <body class="bg-background">
+    <div class="m-auto flex min-h-dvh max-w-4xl flex-col px-6 pt-18 pb-6">
+      <Header />
+      <slot />
+      <Footer />
+    </div>
+  </body>
+</html>
