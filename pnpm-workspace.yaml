@@ -3,5 +3,6 @@ allowBuilds:
   esbuild: true
   sharp: true
 overrides:
+  minimatch@10: ^11.0.1
   immutable@5: ^5.1.8
   katex: ^0.18.2
