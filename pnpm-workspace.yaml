@@ -2,3 +2,6 @@ allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   sharp: true
+overrides:
+  immutable@5: ^5.1.8
+  katex: ^0.18.2
